@@ -8,11 +8,18 @@ import java.time.ZoneId
 /**
  * SM-2 spaced repetition algorithm.
  *
- * Quality scores by interaction mode:
- *   check  = 4  (highest — user saw French, self-assessed "I knew it")
- *   cloze  = 3  (fill-in-the-blank correct)
- *   choice = 2  (multiple choice correct)
- *   don't know = 0
+ * Quality scores by interaction mode (see [qualityForMode]):
+ *   check correct   = 5  (highest — user saw French, self-assessed "I knew it")
+ *   cloze correct   = 2  (fill-in-the-blank correct)
+ *   choice correct  = 1  (multiple choice correct — easiest mode, lowest credit)
+ *   wrong / don't know / explore = 0
+ *
+ * Threshold behaviour: SM-2 treats quality < 2 as a failure and resets the
+ * schedule (repetitions → 0, intervalDays → 1, easeFactor − 0.2 floored at 1.3).
+ * That means only Check-correct (5) and Cloze-correct (2) advance the schedule;
+ * a correct multiple-choice answer (1) is bookkept the same as a miss for
+ * scheduling purposes, while still being recorded as a "knew it" in the
+ * per-mode counters in ProgressEntity.
  */
 object SM2 {
 

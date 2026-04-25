@@ -140,17 +140,28 @@ class ReviewViewModel(application: Application) : AndroidViewModel(application) 
 
     fun startPosSession(pos: String) {
         viewModelScope.launch {
-            val posIds = repo.getWordIdsByPos(pos)
-            if (posIds.isEmpty()) {
-                _state.value = _state.value.copy(sessionComplete = true, queue = emptyList())
+            val s = _state.value
+            // Same logic as General Review (due cards by next_review with random
+            // tiebreaker + new cards under the daily cap), additionally filtered
+            // to words whose pos matches the user's selection.
+            val newPerDay = settings.effectiveNewPerDay
+            val reviewsPerDay = settings.reviewsPerDay
+            val queue = repo.getReviewQueueByPos(pos, newPerDay, reviewsPerDay)
+            if (queue.isEmpty()) {
+                _state.value = s.copy(
+                    mode = ReviewMode.START_PAGE,
+                    sessionComplete = false,
+                    noCardsDue = true,
+                    queue = emptyList(),
+                    selectedPos = pos
+                )
                 return@launch
             }
-            val shuffled = posIds.shuffled()
-            _state.value = _state.value.copy(
-                queue = shuffled, queueIndex = 0,
-                sessionComplete = false, selectedPos = pos
+            _state.value = s.copy(
+                queue = queue, queueIndex = 0,
+                sessionComplete = false, noCardsDue = false, selectedPos = pos
             )
-            loadWord(shuffled[0])
+            loadWord(queue[0])
         }
     }
 

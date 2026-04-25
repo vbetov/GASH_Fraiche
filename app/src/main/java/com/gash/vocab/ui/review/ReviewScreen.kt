@@ -37,11 +37,9 @@ fun ReviewScreen(vm: ReviewViewModel = viewModel()) {
 
     if (state.mode == ReviewMode.START_PAGE) {
         StartPage(
-            weeks = state.allWeeks,
             posValues = state.allPos,
             noCardsDue = state.noCardsDue,
             onStartAll = { vm.startSession() },
-            onStartWeek = { vm.startWeekSession(it) },
             onStartPos = { vm.startPosSession(it) }
         )
         return
@@ -651,14 +649,11 @@ private fun SectionHeader(title: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun StartPage(
-    weeks: List<String>,
     posValues: List<String>,
     noCardsDue: Boolean = false,
     onStartAll: () -> Unit,
-    onStartWeek: (String) -> Unit,
     onStartPos: (String) -> Unit
 ) {
-    var selectedWeek by remember { mutableStateOf<String?>(null) }
     var selectedPos by remember { mutableStateOf<String?>(null) }
 
     Column(
@@ -735,94 +730,7 @@ private fun StartPage(
 
         Spacer(Modifier.height(12.dp))
 
-        // ── Option 2: Review by Week ─────────────────────────────
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = cardColor)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Review by Week",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = cardContentColor
-                )
-
-                Spacer(Modifier.height(4.dp))
-
-                Text(
-                    text = "Focus on vocabulary from a specific week",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = cardContentColor.copy(alpha = 0.6f),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-                if (weeks.isEmpty()) {
-                    Text(
-                        text = "No weeks data available",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = cardContentColor.copy(alpha = 0.4f)
-                    )
-                } else {
-                    var weekExpanded by remember { mutableStateOf(false) }
-
-                    ExposedDropdownMenuBox(
-                        expanded = weekExpanded,
-                        onExpandedChange = { weekExpanded = it },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        OutlinedTextField(
-                            value = selectedWeek ?: "Select a week...",
-                            onValueChange = {},
-                            readOnly = true,
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = weekExpanded) },
-                            modifier = Modifier
-                                .menuAnchor()
-                                .fillMaxWidth(),
-                            singleLine = true
-                        )
-
-                        ExposedDropdownMenu(
-                            expanded = weekExpanded,
-                            onDismissRequest = { weekExpanded = false }
-                        ) {
-                            weeks.forEach { week ->
-                                DropdownMenuItem(
-                                    text = { Text(week) },
-                                    onClick = {
-                                        selectedWeek = week
-                                        weekExpanded = false
-                                    }
-                                )
-                            }
-                        }
-                    }
-
-                    Spacer(Modifier.height(10.dp))
-
-                    Button(
-                        onClick = { selectedWeek?.let { onStartWeek(it) } },
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = selectedWeek != null
-                    ) {
-                        Icon(Icons.Default.School, contentDescription = null)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Start")
-                    }
-                }
-            }
-        }
-
-        Spacer(Modifier.height(12.dp))
-
-        // ── Option 3: Review by Part of Speech ───────────────────
+        // ── Option 2: Review by Part of Speech ───────────────────
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = cardColor)

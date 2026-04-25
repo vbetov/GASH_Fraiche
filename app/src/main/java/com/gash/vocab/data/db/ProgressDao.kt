@@ -20,17 +20,47 @@ interface ProgressDao {
     suspend fun getAllProgressList(): List<ProgressEntity>
 
     /**
-     * Words due for review: next_review <= now, ordered by earliest due first.
+     * Words due for review: next_review <= now, earliest-due first.
+     * Cards sharing the same next_review timestamp are randomised relative to
+     * each other so they have equal probability of selection when capped.
      */
-    @Query("SELECT * FROM progress WHERE next_review <= :now AND next_review > 0 ORDER BY next_review ASC")
+    @Query("SELECT * FROM progress WHERE next_review <= :now AND next_review > 0 ORDER BY next_review ASC, RANDOM()")
     suspend fun getDueCards(now: Long): List<ProgressEntity>
 
     /**
-     * New words: words that have no progress entry yet.
-     * Returns word IDs that are NOT in the progress table.
+     * Same as [getDueCards] but restricted to words whose `pos` matches.
+     * Earliest-due first, RANDOM() tiebreaker within equal next_review values.
      */
-    @Query("SELECT id FROM words WHERE id NOT IN (SELECT word_id FROM progress) ORDER BY id ASC LIMIT :limit")
+    @Query(
+        """
+        SELECT p.* FROM progress p
+        INNER JOIN words w ON w.id = p.word_id
+        WHERE p.next_review <= :now AND p.next_review > 0 AND w.pos = :pos
+        ORDER BY p.next_review ASC, RANDOM()
+        """
+    )
+    suspend fun getDueCardsByPos(now: Long, pos: String): List<ProgressEntity>
+
+    /**
+     * New words: words that have no progress entry yet.
+     * Returns word IDs that are NOT in the progress table, randomly selected
+     * from the eligible pool so each new card has equal probability of
+     * appearing in any given session.
+     */
+    @Query("SELECT id FROM words WHERE id NOT IN (SELECT word_id FROM progress) ORDER BY RANDOM() LIMIT :limit")
     suspend fun getNewWordIds(limit: Int): List<Int>
+
+    /**
+     * Same as [getNewWordIds] but restricted to a particular `pos`.
+     */
+    @Query(
+        """
+        SELECT id FROM words
+        WHERE id NOT IN (SELECT word_id FROM progress) AND pos = :pos
+        ORDER BY RANDOM() LIMIT :limit
+        """
+    )
+    suspend fun getNewWordIdsByPos(pos: String, limit: Int): List<Int>
 
     /**
      * Count of words studied today (first_encountered or last_encountered matches today's date prefix).

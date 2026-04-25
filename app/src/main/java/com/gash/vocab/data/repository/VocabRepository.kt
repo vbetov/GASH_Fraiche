@@ -67,6 +67,26 @@ class VocabRepository(private val db: AppDatabase) {
     }
 
     /**
+     * Same logic as [getReviewQueue], with the additional constraint that every
+     * card (due or new) must have its `pos` equal to [pos]. Daily new-card slots
+     * are still measured against the user's overall `studiedToday` count, so the
+     * `newPerDay` cap is shared across all sessions on a given day — same
+     * behaviour as General Review.
+     */
+    suspend fun getReviewQueueByPos(pos: String, newPerDay: Int, reviewsPerDay: Int): List<Int> {
+        val now = Instant.now().toEpochMilli()
+        val todayPrefix = LocalDate.now().toString()
+
+        val dueCards = progressDao.getDueCardsByPos(now, pos).take(reviewsPerDay)
+
+        val studiedToday = progressDao.getStudiedTodayCount(todayPrefix)
+        val newSlots = maxOf(0, newPerDay - studiedToday)
+        val newWordIds = progressDao.getNewWordIdsByPos(pos, newSlots)
+
+        return dueCards.map { it.wordId } + newWordIds
+    }
+
+    /**
      * Record a review result.
      *
      * @param wordId  the word reviewed
