@@ -60,25 +60,7 @@ fun BrowseScreen(vm: BrowseViewModel = viewModel()) {
                     singleLine = true
                 )
 
-                // Filters row 1: Weeks
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilterDropdown(
-                        label = "Weeks",
-                        selected = state.filterWeeks,
-                        options = state.allWeeks,
-                        onSelect = { vm.setFilterWeeks(it) },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                Spacer(Modifier.height(4.dp))
-
-                // Filters row 2: POS + Source
+                // Filters row: POS + Source
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -142,11 +142,11 @@ class ReviewViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             val s = _state.value
             // Same logic as General Review (due cards by next_review with random
-            // tiebreaker + new cards under the daily cap), additionally filtered
-            // to words whose pos matches the user's selection.
-            val newPerDay = settings.effectiveNewPerDay
-            val reviewsPerDay = settings.reviewsPerDay
-            val queue = repo.getReviewQueueByPos(pos, newPerDay, reviewsPerDay)
+            // tiebreaker + new cards in random order), filtered to words whose
+            // pos matches the user's selection. Daily study limits are NOT
+            // applied — POS sessions pull every currently-due + new card for
+            // the chosen POS.
+            val queue = repo.getReviewQueueByPos(pos)
             if (queue.isEmpty()) {
                 _state.value = s.copy(
                     mode = ReviewMode.START_PAGE,
