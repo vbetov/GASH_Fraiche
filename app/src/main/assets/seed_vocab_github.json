@@ -1,0 +1,1172 @@
+[
+  {
+    "id": 1,
+    "french": "la religion",
+    "english": "religion",
+    "example": "La religion joue un rôle important dans la société.",
+    "pos": "noun (f.)",
+    "source": "Grid – Atouts",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] est une affaire privée en France.",
+      "La liberté de [...] est garantie par la Constitution.",
+      "Il pratique sa [...] avec dévotion."
+    ],
+    "related": [
+      "la laïcité (secularism)",
+      "la foi (faith)",
+      "le culte (the worship)"
+    ],
+    "relatedEN": [
+      "secularism",
+      "faith",
+      "the worship"
+    ],
+    "etymology": [
+      "religieux (religious)",
+      "la religiosité (religiosity)",
+      "irréligieux (irreligious)"
+    ]
+  },
+  {
+    "id": 2,
+    "french": "la démographie",
+    "english": "demographics / demography",
+    "example": "La démographie française est en évolution.",
+    "pos": "noun (f.)",
+    "source": "Grid – Atouts",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] française est en baisse depuis quelques années.",
+      "L'étude de la [...] permet d'anticiper les besoins sociaux.",
+      "La [...] des grandes villes continue de croître."
+    ],
+    "related": [
+      "la natalité (the birth rate)",
+      "le recensement (the census)",
+      "le vieillissement (ageing)"
+    ],
+    "relatedEN": [
+      "the birth rate",
+      "the census",
+      "ageing"
+    ],
+    "etymology": [
+      "démographique (demographic)",
+      "le démographe (the demographer)",
+      "le peuple (the people, from Greek demos)"
+    ]
+  },
+  {
+    "id": 3,
+    "french": "les loisirs",
+    "english": "leisure activities / hobbies",
+    "example": "Les Français consacrent du temps aux loisirs.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Atouts",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les Français consacrent beaucoup de temps aux [...].",
+      "Le centre de [...] propose des activités pour tous les âges.",
+      "Les [...] créatifs sont de plus en plus populaires."
+    ],
+    "related": [
+      "le divertissement (entertainment)",
+      "les vacances (holidays)",
+      "le temps libre (free time)"
+    ],
+    "relatedEN": [
+      "entertainment",
+      "holidays",
+      "free time"
+    ],
+    "etymology": [
+      "le loisir (leisure)",
+      "loisible (permissible)",
+      "loisir (from Latin licere, to be allowed)"
+    ]
+  },
+  {
+    "id": 4,
+    "french": "les frontières",
+    "english": "borders",
+    "example": "Les frontières du pays sont bien définies.",
+    "pos": "noun (f. pl.)",
+    "source": "Grid – Atouts",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] entre les pays européens sont ouvertes.",
+      "Le contrôle aux [...] a été renforcé.",
+      "Les [...] naturelles sont souvent des montagnes ou des fleuves."
+    ],
+    "related": [
+      "la douane (customs)",
+      "le passeport (the passport)",
+      "le territoire (the territory)"
+    ],
+    "relatedEN": [
+      "customs",
+      "the passport",
+      "the territory"
+    ],
+    "etymology": [
+      "la frontière (the border)",
+      "frontalier (border-related)",
+      "le front (the front)"
+    ]
+  },
+  {
+    "id": 5,
+    "french": "la technologie",
+    "english": "technology",
+    "example": "La technologie est un atout pour l'économie.",
+    "pos": "noun (f.)",
+    "source": "Grid – Atouts",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] a transformé notre façon de travailler.",
+      "Les progrès de la [...] sont impressionnants.",
+      "La France investit dans la [...] numérique."
+    ],
+    "related": [
+      "l'informatique (computer science)",
+      "le numérique (digital technology)",
+      "l'invention (the invention)"
+    ],
+    "relatedEN": [
+      "computer science",
+      "digital technology",
+      "the invention"
+    ],
+    "etymology": [
+      "technologique (technological)",
+      "le technicien (the technician)",
+      "la technique (the technique)"
+    ]
+  },
+  {
+    "id": 6,
+    "french": "l'histoire",
+    "english": "history",
+    "example": "L'histoire de France est riche et complexe.",
+    "pos": "noun (f.)",
+    "source": "Grid – Atouts",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "[...] de France est marquée par la Révolution.",
+      "Il étudie [...] médiévale à l'université.",
+      "Ce musée raconte [...] de la Seconde Guerre mondiale."
+    ],
+    "related": [
+      "le patrimoine (heritage)",
+      "l'archéologie (archaeology)",
+      "la mémoire (memory)"
+    ],
+    "relatedEN": [
+      "heritage",
+      "archaeology",
+      "memory"
+    ],
+    "etymology": [
+      "historique (historical)",
+      "l'historien (the historian)",
+      "la préhistoire (prehistory)"
+    ]
+  },
+  {
+    "id": 7,
+    "french": "la guerre",
+    "english": "war",
+    "example": "La guerre a causé beaucoup de destructions.",
+    "pos": "noun (f.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] a dévasté le pays pendant cinq ans.",
+      "Les soldats sont partis à la [...].",
+      "La Première [...] mondiale a commencé en 1914."
+    ],
+    "related": [
+      "la paix (peace)",
+      "l'armée (the army)",
+      "le conflit (the conflict)"
+    ],
+    "relatedEN": [
+      "peace",
+      "the army",
+      "the conflict"
+    ],
+    "etymology": [
+      "guerrier (warrior)",
+      "guerroyer (to wage war)",
+      "la guérilla (guerrilla warfare)"
+    ]
+  },
+  {
+    "id": 8,
+    "french": "la rivière",
+    "english": "the river",
+    "example": "La rivière traverse la ville.",
+    "pos": "noun (f.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] coule au fond de la vallée.",
+      "Les enfants se baignent dans la [...] en été.",
+      "Cette [...] est polluée par les rejets industriels."
+    ],
+    "related": [
+      "le fleuve (the river flowing to the sea)",
+      "le ruisseau (the stream)",
+      "la rive (the bank)"
+    ],
+    "relatedEN": [
+      "the river flowing to the sea",
+      "the stream",
+      "the bank"
+    ],
+    "etymology": [
+      "la rive (the bank)",
+      "riverain (riverside/resident)",
+      "le rivage (the shore)"
+    ]
+  },
+  {
+    "id": 9,
+    "french": "les animaux",
+    "english": "animals",
+    "example": "Les animaux sauvages sont menacés.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] sauvages sont menacés par la déforestation.",
+      "Les [...] domestiques apportent du bonheur aux familles.",
+      "La protection des [...] est un sujet important."
+    ],
+    "related": [
+      "la faune (the fauna)",
+      "l'espèce (the species)",
+      "le zoo (the zoo)"
+    ],
+    "relatedEN": [
+      "the fauna",
+      "the species",
+      "the zoo"
+    ],
+    "etymology": [
+      "l'animal (the animal)",
+      "animalier (animal-related)",
+      "l'animalité (animality)"
+    ]
+  },
+  {
+    "id": 10,
+    "french": "la nationalité",
+    "english": "nationality",
+    "example": "Quelle est votre nationalité ?",
+    "pos": "noun (f.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Quelle est votre [...] ?",
+      "Il a obtenu la [...] française par naturalisation.",
+      "La double [...] est autorisée dans certains pays."
+    ],
+    "related": [
+      "la citoyenneté (citizenship)",
+      "le passeport (the passport)",
+      "la naturalisation (naturalisation)"
+    ],
+    "relatedEN": [
+      "citizenship",
+      "the passport",
+      "naturalisation"
+    ],
+    "etymology": [
+      "la nation (the nation)",
+      "national (national)",
+      "nationaliser (to nationalise)"
+    ]
+  },
+  {
+    "id": 11,
+    "french": "les monuments historiques",
+    "english": "historical monuments",
+    "example": "Les monuments historiques attirent des touristes.",
+    "pos": "noun phrase (m. pl.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] sont protégés par l'État.",
+      "La France possède de nombreux [...].",
+      "La restauration des [...] coûte très cher."
+    ],
+    "related": [
+      "le patrimoine (heritage)",
+      "le château (the castle)",
+      "la cathédrale (the cathedral)"
+    ],
+    "relatedEN": [
+      "heritage",
+      "the castle",
+      "the cathedral"
+    ],
+    "etymology": [
+      "le monument (the monument)",
+      "monumental (monumental)",
+      "historique (historical)"
+    ]
+  },
+  {
+    "id": 12,
+    "french": "le pouvoir politique",
+    "english": "political power",
+    "example": "Le pouvoir politique est partagé entre les chambres.",
+    "pos": "noun phrase (m.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Le [...] est partagé entre plusieurs institutions.",
+      "L'accès au [...] est un enjeu des élections.",
+      "Le [...] doit être exercé dans l'intérêt général."
+    ],
+    "related": [
+      "l'autorité (authority)",
+      "la gouvernance (governance)",
+      "l'influence (influence)"
+    ],
+    "relatedEN": [
+      "authority",
+      "governance",
+      "influence"
+    ],
+    "etymology": [
+      "le pouvoir (the power)",
+      "pouvoir (to be able)",
+      "la politique (politics)"
+    ]
+  },
+  {
+    "id": 13,
+    "french": "les inégalités homme/femme",
+    "english": "gender inequality",
+    "example": "Les inégalités homme/femme persistent dans le monde du travail.",
+    "pos": "noun phrase (f. pl.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] persistent dans le monde professionnel.",
+      "La lutte contre les [...] est un enjeu majeur.",
+      "Les [...] se manifestent notamment dans les salaires."
+    ],
+    "related": [
+      "la parité (parity)",
+      "le plafond de verre (the glass ceiling)",
+      "le féminisme (feminism)"
+    ],
+    "relatedEN": [
+      "parity",
+      "the glass ceiling",
+      "feminism"
+    ],
+    "etymology": [
+      "l'inégalité (inequality)",
+      "l'égalité (equality)",
+      "égal (equal)"
+    ]
+  },
+  {
+    "id": 14,
+    "french": "les ressources naturelles",
+    "english": "natural resources",
+    "example": "Les ressources naturelles sont limitées.",
+    "pos": "noun phrase (f. pl.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] de la planète ne sont pas inépuisables.",
+      "L'exploitation des [...] doit être durable.",
+      "Ce pays est riche en [...]."
+    ],
+    "related": [
+      "les matières premières (raw materials)",
+      "l'énergie (energy)",
+      "le développement durable (sustainable development)"
+    ],
+    "relatedEN": [
+      "raw materials",
+      "energy",
+      "sustainable development"
+    ],
+    "etymology": [
+      "la ressource (the resource)",
+      "naturel (natural)",
+      "la nature (nature)"
+    ]
+  },
+  {
+    "id": 15,
+    "french": "les personnages célèbres",
+    "english": "famous figures",
+    "example": "Les personnages célèbres ont marqué l'histoire.",
+    "pos": "noun phrase (m. pl.)",
+    "source": "Grid – Problèmes",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] de l'histoire française incluent Napoléon et De Gaulle.",
+      "Ce livre présente les [...] du XIXe siècle.",
+      "Les [...] inspirent les jeunes générations."
+    ],
+    "related": [
+      "la célébrité (the celebrity)",
+      "la biographie (the biography)",
+      "l'héritage (the legacy)"
+    ],
+    "relatedEN": [
+      "the celebrity",
+      "the biography",
+      "the legacy"
+    ],
+    "etymology": [
+      "le personnage (the character/figure)",
+      "la personne (the person)",
+      "célèbre (famous)"
+    ]
+  },
+  {
+    "id": 16,
+    "french": "la pauvreté",
+    "english": "poverty",
+    "example": "La pauvreté reste un problème majeur.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] touche des millions de personnes en France.",
+      "La lutte contre la [...] est une priorité sociale.",
+      "Le taux de [...] a augmenté pendant la crise."
+    ],
+    "related": [
+      "la richesse (wealth)",
+      "la précarité (precariousness)",
+      "l'exclusion (exclusion)"
+    ],
+    "relatedEN": [
+      "wealth",
+      "precariousness",
+      "exclusion"
+    ],
+    "etymology": [
+      "pauvre (poor)",
+      "pauvrement (poorly)",
+      "appauvrir (to impoverish)"
+    ]
+  },
+  {
+    "id": 17,
+    "french": "la culture",
+    "english": "culture",
+    "example": "La culture française est reconnue dans le monde entier.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] française rayonne dans le monde entier.",
+      "Le ministère de la [...] finance de nombreux projets.",
+      "La [...] est un facteur d'intégration sociale."
+    ],
+    "related": [
+      "l'art (art)",
+      "le patrimoine (heritage)",
+      "la civilisation (civilisation)"
+    ],
+    "relatedEN": [
+      "art",
+      "heritage",
+      "civilisation"
+    ],
+    "etymology": [
+      "culturel (cultural)",
+      "cultiver (to cultivate)",
+      "le culte (the worship/cult)"
+    ]
+  },
+  {
+    "id": 18,
+    "french": "la géographie",
+    "english": "geography",
+    "example": "La géographie de la France est très variée.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] de la France est très diversifiée.",
+      "Il enseigne la [...] au lycée.",
+      "La [...] influence le climat et les activités humaines."
+    ],
+    "related": [
+      "la cartographie (cartography)",
+      "le relief (the terrain)",
+      "le climat (the climate)"
+    ],
+    "relatedEN": [
+      "cartography",
+      "the terrain",
+      "the climate"
+    ],
+    "etymology": [
+      "géographique (geographical)",
+      "le géographe (the geographer)",
+      "la géologie (geology)"
+    ]
+  },
+  {
+    "id": 19,
+    "french": "l'immigration",
+    "english": "immigration",
+    "example": "L'immigration est un sujet de débat politique.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "[...] est un sujet central du débat politique.",
+      "[...] a contribué à la diversité culturelle du pays.",
+      "Les lois sur [...] ont été réformées."
+    ],
+    "related": [
+      "l'émigration (emigration)",
+      "l'intégration (integration)",
+      "le visa (the visa)"
+    ],
+    "relatedEN": [
+      "emigration",
+      "integration",
+      "the visa"
+    ],
+    "etymology": [
+      "immigrer (to immigrate)",
+      "l'immigré (the immigrant)",
+      "migrer (to migrate)"
+    ]
+  },
+  {
+    "id": 20,
+    "french": "les droits",
+    "english": "rights",
+    "example": "Les droits de l'homme sont fondamentaux.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] de l'homme sont universels.",
+      "Tous les citoyens ont des [...] et des devoirs.",
+      "Les [...] des femmes ont progressé au XXe siècle."
+    ],
+    "related": [
+      "les devoirs (duties)",
+      "la liberté (freedom)",
+      "la justice (justice)"
+    ],
+    "relatedEN": [
+      "duties",
+      "freedom",
+      "justice"
+    ],
+    "etymology": [
+      "le droit (the right/law)",
+      "le droitier (the right-hander)",
+      "adroit (skilful)"
+    ]
+  },
+  {
+    "id": 21,
+    "french": "montagneux / montagneuse",
+    "english": "mountainous",
+    "example": "Le sud-est de la France est montagneux.",
+    "pos": "adjective",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Le terrain [...] rend la construction difficile.",
+      "Cette région [...] attire les amateurs de randonnée.",
+      "Le paysage [...] est magnifique en automne."
+    ],
+    "related": [
+      "vallonné (hilly)",
+      "plat (flat)",
+      "escarpé (steep)"
+    ],
+    "relatedEN": [
+      "hilly",
+      "flat",
+      "steep"
+    ],
+    "etymology": [
+      "la montagne (the mountain)",
+      "le mont (the mount)",
+      "monter (to climb)"
+    ]
+  },
+  {
+    "id": 22,
+    "french": "le travail",
+    "english": "work / labour",
+    "example": "Le travail est un droit fondamental.",
+    "pos": "noun (m.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Le [...] est un droit fondamental.",
+      "Elle cherche du [...] depuis trois mois.",
+      "Le [...] en équipe est essentiel dans cette entreprise."
+    ],
+    "related": [
+      "l'emploi (employment)",
+      "le bureau (the office)",
+      "le métier (the profession)"
+    ],
+    "relatedEN": [
+      "employment",
+      "the office",
+      "the profession"
+    ],
+    "etymology": [
+      "travailler (to work)",
+      "le travailleur (the worker)",
+      "le travaillisme (labourism)"
+    ]
+  },
+  {
+    "id": 23,
+    "french": "la crise",
+    "english": "crisis",
+    "example": "La crise économique a touché tous les secteurs.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] économique a touché tous les secteurs.",
+      "Le pays traverse une [...] politique grave.",
+      "La [...] sanitaire a bouleversé nos habitudes."
+    ],
+    "related": [
+      "la récession (the recession)",
+      "l'urgence (the emergency)",
+      "la reprise (the recovery)"
+    ],
+    "relatedEN": [
+      "the recession",
+      "the emergency",
+      "the recovery"
+    ],
+    "etymology": [
+      "critique (critical)",
+      "la critique (the criticism)",
+      "le critère (the criterion)"
+    ]
+  },
+  {
+    "id": 24,
+    "french": "la croissance",
+    "english": "growth",
+    "example": "La croissance économique a repris.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "Handwritten note: 'economic growth'",
+    "cloze": [
+      "La [...] économique est en baisse ce trimestre.",
+      "Le taux de [...] du PIB est de 1,5 %.",
+      "La [...] démographique pose des défis."
+    ],
+    "related": [
+      "le déclin (the decline)",
+      "le développement (development)",
+      "la prospérité (prosperity)"
+    ],
+    "relatedEN": [
+      "the decline",
+      "development",
+      "prosperity"
+    ],
+    "etymology": [
+      "croître (to grow)",
+      "le croissant (the crescent/growth)",
+      "la décroissance (degrowth)"
+    ]
+  },
+  {
+    "id": 25,
+    "french": "le tourisme",
+    "english": "tourism",
+    "example": "Le tourisme est une source importante de revenus.",
+    "pos": "noun (m.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Le [...] est la première source de revenus de cette région.",
+      "Le [...] de masse pose des problèmes environnementaux.",
+      "La France est le premier pays au monde pour le [...]."
+    ],
+    "related": [
+      "le voyageur (the traveller)",
+      "l'hôtellerie (the hotel industry)",
+      "le patrimoine (heritage)"
+    ],
+    "relatedEN": [
+      "the traveller",
+      "the hotel industry",
+      "heritage"
+    ],
+    "etymology": [
+      "le touriste (the tourist)",
+      "touristique (touristic)",
+      "le tour (the tour)"
+    ]
+  },
+  {
+    "id": 26,
+    "french": "les grandes villes",
+    "english": "major cities",
+    "example": "Les grandes villes attirent beaucoup de travailleurs.",
+    "pos": "noun phrase (f. pl.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] françaises attirent de nombreux jeunes actifs.",
+      "Les [...] souffrent souvent de problèmes de pollution.",
+      "Vivre dans les [...] coûte de plus en plus cher."
+    ],
+    "related": [
+      "la métropole (the metropolis)",
+      "la banlieue (the suburb)",
+      "l'urbanisation (urbanisation)"
+    ],
+    "relatedEN": [
+      "the metropolis",
+      "the suburb",
+      "urbanisation"
+    ],
+    "etymology": [
+      "grand (big)",
+      "la grandeur (greatness)",
+      "la ville (the city)"
+    ]
+  },
+  {
+    "id": 27,
+    "french": "la nourriture",
+    "english": "food",
+    "example": "La nourriture française est célèbre dans le monde.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] française est réputée dans le monde entier.",
+      "Il faut éviter de gaspiller la [...].",
+      "La [...] bio est de plus en plus populaire."
+    ],
+    "related": [
+      "l'alimentation (diet/food supply)",
+      "la gastronomie (gastronomy)",
+      "le repas (the meal)"
+    ],
+    "relatedEN": [
+      "diet/food supply",
+      "gastronomy",
+      "the meal"
+    ],
+    "etymology": [
+      "nourrir (to feed)",
+      "nourrissant (nourishing)",
+      "la sous-nutrition (malnutrition)"
+    ]
+  },
+  {
+    "id": 28,
+    "french": "la science",
+    "english": "science",
+    "example": "La science joue un rôle important dans le développement.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] progresse grâce à la recherche.",
+      "Elle a consacré sa vie à la [...].",
+      "La [...] et la technologie sont étroitement liées."
+    ],
+    "related": [
+      "la recherche (research)",
+      "le laboratoire (the laboratory)",
+      "la découverte (the discovery)"
+    ],
+    "relatedEN": [
+      "research",
+      "the laboratory",
+      "the discovery"
+    ],
+    "etymology": [
+      "scientifique (scientific)",
+      "le scientifique (the scientist)",
+      "la conscience (conscience/awareness)"
+    ]
+  },
+  {
+    "id": 29,
+    "french": "le désert",
+    "english": "the desert",
+    "example": "Le Sahara est le plus grand désert du monde.",
+    "pos": "noun (m.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Le Sahara est le plus grand [...] du monde.",
+      "Traverser le [...] est une aventure dangereuse.",
+      "Ce village est un [...] médical, il n'y a aucun docteur."
+    ],
+    "related": [
+      "l'oasis (the oasis)",
+      "la sécheresse (the drought)",
+      "le sable (the sand)"
+    ],
+    "relatedEN": [
+      "the oasis",
+      "the drought",
+      "the sand"
+    ],
+    "etymology": [
+      "désertique (desert-like)",
+      "déserter (to desert)",
+      "la désertification (desertification)"
+    ]
+  },
+  {
+    "id": 30,
+    "french": "la forêt",
+    "english": "the forest",
+    "example": "La forêt amazonienne est menacée.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] de Fontainebleau est très appréciée des randonneurs.",
+      "Les incendies menacent la [...] chaque été.",
+      "La [...] tropicale abrite une biodiversité exceptionnelle."
+    ],
+    "related": [
+      "le bois (the wood/woods)",
+      "l'arbre (the tree)",
+      "la déforestation (deforestation)"
+    ],
+    "relatedEN": [
+      "the wood/woods",
+      "the tree",
+      "deforestation"
+    ],
+    "etymology": [
+      "forestier (forest-related)",
+      "le forestier (the forester)",
+      "la déforestation (deforestation)"
+    ]
+  },
+  {
+    "id": 31,
+    "french": "les transports",
+    "english": "transport / transportation",
+    "example": "Les transports en commun sont bien développés à Paris.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] en commun sont gratuits pour les enfants.",
+      "Le réseau de [...] est bien développé en France.",
+      "Les [...] aériens sont plus rapides mais polluants."
+    ],
+    "related": [
+      "le métro (the metro)",
+      "le train (the train)",
+      "la circulation (traffic)"
+    ],
+    "relatedEN": [
+      "the metro",
+      "the train",
+      "traffic"
+    ],
+    "etymology": [
+      "transporter (to transport)",
+      "le transporteur (the carrier)",
+      "le transport (transport, singular)"
+    ]
+  },
+  {
+    "id": 32,
+    "french": "les clichés",
+    "english": "stereotypes / clichés",
+    "example": "Les clichés sur les Français sont nombreux.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] sur les Français incluent le béret et la baguette.",
+      "Il faut dépasser les [...] pour comprendre un pays.",
+      "Les [...] culturels sont parfois amusants mais souvent réducteurs."
+    ],
+    "related": [
+      "le stéréotype (the stereotype)",
+      "le préjugé (the prejudice)",
+      "l'idée reçue (the preconceived idea)"
+    ],
+    "relatedEN": [
+      "the stereotype",
+      "the prejudice",
+      "the preconceived idea"
+    ],
+    "etymology": [
+      "le cliché (the snapshot/stereotype)",
+      "clicher (to stereotype, printing)",
+      "le déclic (the click/trigger)"
+    ]
+  },
+  {
+    "id": 33,
+    "french": "l'innovation",
+    "english": "innovation",
+    "example": "L'innovation est essentielle pour la compétitivité.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "[...] technologique transforme notre quotidien.",
+      "La France encourage [...] dans les start-ups.",
+      "[...] est essentielle pour rester compétitif."
+    ],
+    "related": [
+      "la créativité (creativity)",
+      "le brevet (the patent)",
+      "la recherche (research)"
+    ],
+    "relatedEN": [
+      "creativity",
+      "the patent",
+      "research"
+    ],
+    "etymology": [
+      "innover (to innovate)",
+      "innovant (innovative)",
+      "la nouveauté (the novelty)"
+    ]
+  },
+  {
+    "id": 34,
+    "french": "les citoyens",
+    "english": "citizens",
+    "example": "Les citoyens ont le droit de vote.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] ont le devoir de voter.",
+      "Les [...] participent à la vie démocratique.",
+      "Tous les [...] sont égaux devant la loi."
+    ],
+    "related": [
+      "les résidents (residents)",
+      "les électeurs (voters)",
+      "la collectivité (the community)"
+    ],
+    "relatedEN": [
+      "residents",
+      "voters",
+      "the community"
+    ],
+    "etymology": [
+      "la citoyenneté (citizenship)",
+      "le citoyen (the citizen)",
+      "la cité (the city)"
+    ]
+  },
+  {
+    "id": 35,
+    "french": "la famille",
+    "english": "family",
+    "example": "La famille est importante dans la société française.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "La [...] est le pilier de la société française.",
+      "Elle passe les fêtes en [...].",
+      "La [...] recomposée est de plus en plus courante."
+    ],
+    "related": [
+      "le foyer (the household)",
+      "les proches (the close ones)",
+      "la parenté (kinship)"
+    ],
+    "relatedEN": [
+      "the household",
+      "the close ones",
+      "kinship"
+    ],
+    "etymology": [
+      "familial (family-related)",
+      "la familiarité (familiarity)",
+      "se familiariser (to familiarise)"
+    ]
+  },
+  {
+    "id": 36,
+    "french": "les paysages",
+    "english": "landscapes",
+    "example": "Les paysages de Provence sont magnifiques.",
+    "pos": "noun (m. pl.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Les [...] de la Côte d'Azur sont magnifiques.",
+      "Les [...] ruraux attirent de plus en plus de citadins.",
+      "La diversité des [...] français est remarquable."
+    ],
+    "related": [
+      "le panorama (the panorama)",
+      "la vue (the view)",
+      "le décor (the scenery)"
+    ],
+    "relatedEN": [
+      "the panorama",
+      "the view",
+      "the scenery"
+    ],
+    "etymology": [
+      "le pays (the country)",
+      "le paysan (the peasant)",
+      "le paysagiste (the landscape artist)"
+    ]
+  },
+  {
+    "id": 37,
+    "french": "la mer",
+    "english": "the sea",
+    "example": "La mer Méditerranée borde le sud de la France.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Nous partons à la [...] cet été.",
+      "La [...] Méditerranée est plus chaude que l'Atlantique.",
+      "La pollution de la [...] est un problème mondial."
+    ],
+    "related": [
+      "l'océan (the ocean)",
+      "la plage (the beach)",
+      "la côte (the coast)"
+    ],
+    "relatedEN": [
+      "the ocean",
+      "the beach",
+      "the coast"
+    ],
+    "etymology": [
+      "marin (marine)",
+      "le marin (the sailor)",
+      "maritime (maritime)"
+    ]
+  },
+  {
+    "id": 38,
+    "french": "la campagne",
+    "english": "the countryside",
+    "example": "Beaucoup de Français rêvent de vivre à la campagne.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "Ils ont quitté la ville pour vivre à la [...].",
+      "La [...] française est connue pour ses paysages variés.",
+      "La vie à la [...] est plus tranquille."
+    ],
+    "related": [
+      "la ville (the city)",
+      "le village (the village)",
+      "la ferme (the farm)"
+    ],
+    "relatedEN": [
+      "the city",
+      "the village",
+      "the farm"
+    ],
+    "etymology": [
+      "le campagnard (the country dweller)",
+      "le camp (the camp)",
+      "camper (to camp)"
+    ]
+  },
+  {
+    "id": 39,
+    "french": "l'éducation",
+    "english": "education",
+    "example": "L'éducation est une priorité nationale.",
+    "pos": "noun (f.)",
+    "source": "Grid – Caractérist.",
+    "weeks": "Week 1-2",
+    "notes": "",
+    "cloze": [
+      "[...] est obligatoire jusqu'à seize ans en France.",
+      "Le ministère de [...] nationale gère les écoles publiques.",
+      "[...] des enfants est une responsabilité partagée."
+    ],
+    "related": [
+      "l'enseignement (teaching)",
+      "la formation (training)",
+      "l'apprentissage (learning)"
+    ],
+    "relatedEN": [
+      "teaching",
+      "training",
+      "learning"
+    ],
+    "etymology": [
+      "éduquer (to educate)",
+      "éducatif (educational)",
+      "l'éducateur (the educator)"
+    ]
+  }
+]
