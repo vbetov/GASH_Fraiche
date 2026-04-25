@@ -20,6 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -583,6 +586,54 @@ private fun ExploreCard(
 
     Button(onClick = onNext, modifier = Modifier.fillMaxWidth()) {
         Text("Next")
+    }
+
+    Spacer(Modifier.height(8.dp))
+
+    val clipboardManager = LocalClipboardManager.current
+    val geminiContext = LocalContext.current
+
+    OutlinedButton(
+        onClick = {
+            clipboardManager.setText(
+                AnnotatedString("What is the etymology of the following French term/phrase: ${word.french}")
+            )
+            try {
+                // Try launching the Gemini app directly
+                val geminiIntent = geminiContext.packageManager
+                    .getLaunchIntentForPackage("com.google.android.apps.bard")
+                if (geminiIntent != null) {
+                    geminiContext.startActivity(geminiIntent)
+                } else {
+                    // Gemini app not installed — open in browser
+                    val browserIntent = android.content.Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse("https://gemini.google.com/app")
+                    ).apply {
+                        setPackage("com.android.chrome")
+                    }
+                    try {
+                        geminiContext.startActivity(browserIntent)
+                    } catch (_: Exception) {
+                        // Chrome not available — try default browser
+                        val fallback = android.content.Intent(
+                            android.content.Intent.ACTION_VIEW,
+                            android.net.Uri.parse("https://gemini.google.com/app")
+                        )
+                        geminiContext.startActivity(fallback)
+                    }
+                }
+            } catch (e: Exception) {
+                android.widget.Toast.makeText(
+                    geminiContext,
+                    "Could not open Gemini: ${e.message}",
+                    android.widget.Toast.LENGTH_LONG
+                ).show()
+            }
+        },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text("Go further with Gemini")
     }
 }
 
