@@ -7,6 +7,22 @@ import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
 
 /**
+ * Sentence difficulty level for example & cloze sentences shown in Review.
+ *
+ * - [B1_B2] (default): use the existing `example` / `cloze` fields.
+ * - [A2]: use `exampleA2` / `clozeA2`, falling back to B1-B2 if A2 is empty.
+ */
+enum class DifficultyLevel(val key: String, val label: String) {
+    B1_B2("b1_b2", "B1–B2"),
+    A2("a2", "A2");
+
+    companion object {
+        fun fromKey(key: String?): DifficultyLevel =
+            entries.firstOrNull { it.key == key } ?: B1_B2
+    }
+}
+
+/**
  * Persists user settings to SharedPreferences.
  */
 class SettingsRepository(context: Context) {
@@ -62,6 +78,18 @@ class SettingsRepository(context: Context) {
     var easyInterval: Int
         get() = prefs.getInt("easy_interval", 4)
         set(value) = prefs.edit().putInt("easy_interval", value).apply()
+
+    // ── Sentence difficulty ───────────────────────────────────────
+
+    /**
+     * The difficulty level used for example sentences and cloze sentences in
+     * the Review tab. B1_B2 (default) uses the existing `example`/`cloze`
+     * fields on each word. A2 uses `exampleA2`/`clozeA2`, falling back to the
+     * B1-B2 fields when a word has no A2 variant authored.
+     */
+    var difficultyLevel: DifficultyLevel
+        get() = DifficultyLevel.fromKey(prefs.getString("difficulty_level", null))
+        set(value) = prefs.edit().putString("difficulty_level", value.key).apply()
 
     // ── POS category mapping ──────────────────────────────────────
 

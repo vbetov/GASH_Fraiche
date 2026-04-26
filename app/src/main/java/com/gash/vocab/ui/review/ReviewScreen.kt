@@ -103,14 +103,14 @@ fun ReviewScreen(vm: ReviewViewModel = viewModel()) {
             ReviewMode.CHECK -> CheckCard(
                 french = word.french,
                 english = word.english,
-                example = word.example,
+                example = state.effectiveExample,
                 onKnew = { vm.confirmCheck() },
                 onDidntKnow = { vm.failCheck() },
                 onFailAndExplore = { vm.failAndExplore() }
             )
 
             ReviewMode.CLOZE -> ClozeCard(
-                clozeSentence = word.cloze.getOrElse(state.selectedClozeIndex) { "" },
+                clozeSentence = state.effectiveCloze.getOrElse(state.selectedClozeIndex) { "" },
                 answer = word.french,
                 english = word.english,
                 revealed = state.clozeRevealed,
@@ -133,6 +133,8 @@ fun ReviewScreen(vm: ReviewViewModel = viewModel()) {
 
             ReviewMode.EXPLORE -> ExploreCard(
                 word = word,
+                example = state.effectiveExample,
+                cloze = state.effectiveCloze,
                 onNext = { vm.advanceFromExplore() }
             )
 
@@ -179,32 +181,44 @@ private fun FrontCard(
             onClick = onCheck,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(Icons.Default.Check, contentDescription = null)
-            Spacer(Modifier.width(8.dp))
-            Text("Check")
+            ActionRow(
+                leftLabel = "I know it",
+                rightLabel = "Check",
+                icon = { Icon(Icons.Default.Check, contentDescription = null) }
+            )
         }
 
         OutlinedButton(
             onClick = onCloze,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("✏️  Cloze")
+            ActionRow(
+                leftLabel = "I need a hint",
+                rightLabel = "In context",
+                icon = { Text("✏️") }
+            )
         }
 
         OutlinedButton(
             onClick = onChoice,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("🔠  Choice")
+            ActionRow(
+                leftLabel = "I need a hint",
+                rightLabel = "Multiple choice",
+                icon = { Text("🔠") }
+            )
         }
 
         OutlinedButton(
             onClick = onExplore,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(Icons.Default.Explore, contentDescription = null)
-            Spacer(Modifier.width(8.dp))
-            Text("Don't Know — Explore")
+            ActionRow(
+                leftLabel = "Don't know",
+                rightLabel = "Explore meaning",
+                icon = { Icon(Icons.Default.Explore, contentDescription = null) }
+            )
         }
 
         OutlinedButton(
@@ -214,7 +228,55 @@ private fun FrontCard(
                 contentColor = MaterialTheme.colorScheme.error
             )
         ) {
-            Text("❓  Don't Know")
+            ActionRow(
+                leftLabel = "Don't know",
+                rightLabel = "Skip to next",
+                icon = { Text("❓") }
+            )
+        }
+    }
+}
+
+/**
+ * Row layout used inside each action button on the FrontCard.
+ *
+ * Three columns: left label (right-aligned, flex), icon (fixed centre), right
+ * label (left-aligned, flex). The equal-weight side columns mean the icon sits
+ * at the same horizontal position in every button, giving a clean vertical
+ * stripe of icons down the middle of the action stack.
+ */
+@Composable
+private fun ActionRow(
+    leftLabel: String,
+    rightLabel: String,
+    icon: @Composable () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            Text(
+                text = leftLabel,
+                maxLines = 1,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+        Spacer(Modifier.width(12.dp))
+        icon()
+        Spacer(Modifier.width(12.dp))
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Text(
+                text = rightLabel,
+                maxLines = 1,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
@@ -494,6 +556,8 @@ private fun ChoiceCard(
 @Composable
 private fun ExploreCard(
     word: com.gash.vocab.data.db.WordEntity,
+    example: String,
+    cloze: List<String>,
     onNext: () -> Unit
 ) {
     Text(
@@ -520,21 +584,21 @@ private fun ExploreCard(
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
 
-    if (word.example.isNotBlank()) {
+    if (example.isNotBlank()) {
         Spacer(Modifier.height(16.dp))
         SectionHeader("Example")
         Text(
-            text = word.example,
+            text = example,
             style = MaterialTheme.typography.bodyLarge,
             fontStyle = FontStyle.Italic,
             color = MaterialTheme.colorScheme.onSurface
         )
     }
 
-    if (word.cloze.isNotEmpty()) {
+    if (cloze.isNotEmpty()) {
         Spacer(Modifier.height(16.dp))
         SectionHeader("Cloze Sentences")
-        word.cloze.forEach { sentence ->
+        cloze.forEach { sentence ->
             Text(
                 text = "• $sentence",
                 style = MaterialTheme.typography.bodyMedium,

@@ -16,5 +16,9 @@ data class VocabImportEntry(
     val cloze: List<String> = emptyList(),
     val related: List<String> = emptyList(),
     val relatedEN: List<String> = emptyList(),
-    val etymology: List<String> = emptyList()
+    val etymology: List<String> = emptyList(),
+    /** A2-level example sentence. Optional — defaults to empty when absent. */
+    val exampleA2: String = "",
+    /** A2-level cloze sentences. Optional — defaults to empty list when absent. */
+    val clozeA2: List<String> = emptyList()
 )

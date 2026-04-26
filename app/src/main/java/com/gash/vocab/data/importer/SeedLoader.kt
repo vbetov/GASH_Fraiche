@@ -14,7 +14,12 @@ object SeedLoader {
 
     suspend fun seedIfNeeded(context: Context, db: AppDatabase) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        if (prefs.getBoolean(KEY_SEEDED, false)) return
+        val alreadySeeded = prefs.getBoolean(KEY_SEEDED, false)
+        // Re-seed if the words table is empty even when the prefs flag says
+        // we've seeded before. This covers destructive Room migrations, which
+        // wipe the DB but leave SharedPreferences intact.
+        val wordCount = db.wordDao().getWordCount()
+        if (alreadySeeded && wordCount > 0) return
 
         // Prefer full vocab list; fall back to GitHub shortlist
         val jsonText = try {

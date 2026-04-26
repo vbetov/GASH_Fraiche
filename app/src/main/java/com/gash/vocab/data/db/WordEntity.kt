@@ -23,6 +23,10 @@ data class WordEntity(
     @ColumnInfo(name = "example")
     val example: String,
 
+    /** A2-level example sentence. Empty when no A2 variant has been authored. */
+    @ColumnInfo(name = "example_a2", defaultValue = "")
+    val exampleA2: String = "",
+
     @ColumnInfo(name = "pos")
     val pos: String,
 
@@ -38,6 +42,10 @@ data class WordEntity(
     /** Three cloze sentences stored as JSON array via TypeConverter */
     @ColumnInfo(name = "cloze")
     val cloze: List<String>,
+
+    /** A2-level cloze sentences. Empty list when no A2 variant has been authored. */
+    @ColumnInfo(name = "cloze_a2", defaultValue = "[]")
+    val clozeA2: List<String> = emptyList(),
 
     /** Three related words in "French (English)" format */
     @ColumnInfo(name = "related")

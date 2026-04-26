@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.gash.vocab.data.repository.DifficultyLevel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -26,6 +27,7 @@ fun SettingsScreen(onShowStats: () -> Unit = {}, onCloseApp: () -> Unit = {}, vm
     // Dialog state for database import flow
     var showDbConfirmDialog by remember { mutableStateOf(false) }
     var showExportFirstDialog by remember { mutableStateOf(false) }
+    var showPromptDialog by remember { mutableStateOf(false) }
 
     // File picker launchers
     val vocabImportLauncher = rememberLauncherForActivityResult(
@@ -43,6 +45,10 @@ fun SettingsScreen(onShowStats: () -> Unit = {}, onCloseApp: () -> Unit = {}, vm
     val dbImportLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument()
     ) { uri -> uri?.let { vm.importDatabase(context, it) } }
+
+    val promptTemplateLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument("text/markdown")
+    ) { uri -> uri?.let { vm.savePromptTemplate(context, it) } }
 
     // Step 1: "Are you sure?" dialog
     if (showDbConfirmDialog) {
@@ -91,6 +97,48 @@ fun SettingsScreen(onShowStats: () -> Unit = {}, onCloseApp: () -> Unit = {}, vm
                     dbImportLauncher.launch(arrayOf("application/octet-stream", "*/*"))
                 }) {
                     Text("No, proceed")
+                }
+            }
+        )
+    }
+
+    // AI prompt template — instructions before save
+    if (showPromptDialog) {
+        AlertDialog(
+            onDismissRequest = { showPromptDialog = false },
+            title = { Text("How to use the prompt template") },
+            text = {
+                Column {
+                    Text("1. Tap Save below and choose where to put the file on your phone.")
+                    Spacer(Modifier.height(6.dp))
+                    Text("2. Open the saved .md file and copy its full contents.")
+                    Spacer(Modifier.height(6.dp))
+                    Text("3. Paste it into your favourite AI assistant (Claude, Gemini, etc.) along with a list of new French words or phrases you want to learn and a Source label.")
+                    Spacer(Modifier.height(6.dp))
+                    Text("4. Save the AI's JSON reply to a file on your phone.")
+                    Spacer(Modifier.height(6.dp))
+                    Text("5. Come back here and use Vocabulary Import (above) to add the new entries.")
+                    Spacer(Modifier.height(10.dp))
+                    Text(
+                        text = "The template includes your current vocabulary so the AI won't create duplicates.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showPromptDialog = false
+                    promptTemplateLauncher.launch(
+                        "gash_fraiche_vocab_prompt_${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm"))}.md"
+                    )
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPromptDialog = false }) {
+                    Text("Cancel")
                 }
             }
         )
@@ -179,6 +227,23 @@ fun SettingsScreen(onShowStats: () -> Unit = {}, onCloseApp: () -> Unit = {}, vm
             }
         }
 
+        // ── Sentence Difficulty ───────────────────────────────
+
+        SettingsCard("Sentence Difficulty") {
+            Text(
+                text = "Choose your preferred level of complexity for example and cloze sentences",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            DifficultyLevelChips(
+                selected = state.difficultyLevel,
+                onSelect = { vm.setDifficultyLevel(it) }
+            )
+        }
+
         // ── Vocabulary Import ─────────────────────────────────
 
         SettingsCard("Vocabulary Import") {
@@ -212,6 +277,46 @@ fun SettingsScreen(onShowStats: () -> Unit = {}, onCloseApp: () -> Unit = {}, vm
             }
 
             state.importMessage?.let { msg ->
+                Spacer(Modifier.height(8.dp))
+                StatusText(msg)
+            }
+        }
+
+        // ── AI prompt template (generate new vocab via LLM) ───
+
+        SettingsCard("Generate New Vocabulary with AI") {
+            Text(
+                text = "Save a prompt template you can give to an AI assistant " +
+                        "(Claude, Gemini, etc.) to generate new vocabulary " +
+                        "entries in the right format. After the AI replies with JSON, " +
+                        "use Vocabulary Import above to add the entries.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            Button(
+                onClick = { showPromptDialog = true },
+                enabled = !state.isSavingPrompt,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                if (state.isSavingPrompt) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text("Saving...")
+                } else {
+                    Text("📝")
+                    Spacer(Modifier.width(8.dp))
+                    Text("Save Prompt Template")
+                }
+            }
+
+            state.promptTemplateMessage?.let { msg ->
                 Spacer(Modifier.height(8.dp))
                 StatusText(msg)
             }
@@ -464,4 +569,34 @@ private fun StatusText(message: String) {
             MaterialTheme.colorScheme.error
         else MaterialTheme.colorScheme.primary
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DifficultyLevelChips(
+    selected: DifficultyLevel,
+    onSelect: (DifficultyLevel) -> Unit
+) {
+    // Display order is independent of enum declaration order: A2 on the left,
+    // B1–B2 on the right. The enum still has B1_B2 listed first so it remains
+    // the default when no preference has been stored.
+    val displayOrder = listOf(DifficultyLevel.A2, DifficultyLevel.B1_B2)
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        displayOrder.forEach { level ->
+            FilterChip(
+                selected = selected == level,
+                onClick = { onSelect(level) },
+                label = {
+                    Text(
+                        text = level.label + if (level == DifficultyLevel.B1_B2) " (default)" else "",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
 }

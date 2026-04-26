@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.gash.vocab.GashApp
 import com.gash.vocab.data.db.AppDatabase
 import com.gash.vocab.data.importer.VocabImporter
+import com.gash.vocab.data.repository.DifficultyLevel
 import com.gash.vocab.data.repository.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,7 @@ data class SettingsUiState(
     val learningSteps: String = "1,10",
     val graduatingInterval: Int = 1,
     val easyInterval: Int = 4,
+    val difficultyLevel: DifficultyLevel = DifficultyLevel.B1_B2,
     val totalWords: Int = 0,
     val posCategoryMap: Map<String, String> = emptyMap(),
     val importMessage: String? = null,
@@ -29,7 +31,9 @@ data class SettingsUiState(
     val isImporting: Boolean = false,
     val isExporting: Boolean = false,
     val isDbImporting: Boolean = false,
-    val dbImportSuccess: Boolean = false
+    val dbImportSuccess: Boolean = false,
+    val isSavingPrompt: Boolean = false,
+    val promptTemplateMessage: String? = null
 )
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
@@ -50,10 +54,16 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 learningSteps = settings.learningSteps,
                 graduatingInterval = settings.graduatingInterval,
                 easyInterval = settings.easyInterval,
+                difficultyLevel = settings.difficultyLevel,
                 totalWords = repo.getWordCount(),
                 posCategoryMap = settings.posCategoryMap
             )
         }
+    }
+
+    fun setDifficultyLevel(value: DifficultyLevel) {
+        settings.difficultyLevel = value
+        _state.value = _state.value.copy(difficultyLevel = value)
     }
 
     // ── Study limits ──────────────────────────────────────────────
@@ -153,10 +163,36 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             _state.value = _state.value.copy(isImporting = true, progressMessage = null)
             val result = repo.importProgress(context, uri)
             val message = result.fold(
-                onSuccess = { "Imported $it progress entries" },
+                onSuccess = { summary ->
+                    buildString {
+                        append("Imported ${summary.imported} progress entries")
+                        if (summary.remapped > 0) {
+                            append(" (${summary.remapped} matched by content to a different word id)")
+                        }
+                        if (summary.skipped.isNotEmpty()) {
+                            append(" — ${summary.skipped.size} skipped (no matching word in current vocabulary)")
+                        }
+                    }
+                },
                 onFailure = { "Import failed: ${it.message}" }
             )
             _state.value = _state.value.copy(isImporting = false, progressMessage = message)
+        }
+    }
+
+    // ── AI prompt template export ────────────────────────────────
+
+    fun savePromptTemplate(context: Context, uri: Uri) {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(isSavingPrompt = true, promptTemplateMessage = null)
+            val result = repo.savePromptTemplate(context, uri)
+            val message = result.fold(
+                onSuccess = { count ->
+                    "Saved prompt — $count existing word${if (count == 1) "" else "s"} included for deduplication"
+                },
+                onFailure = { "Save failed: ${it.message}" }
+            )
+            _state.value = _state.value.copy(isSavingPrompt = false, promptTemplateMessage = message)
         }
     }
 
@@ -179,6 +215,11 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun clearMessages() {
-        _state.value = _state.value.copy(importMessage = null, progressMessage = null, dbImportMessage = null)
+        _state.value = _state.value.copy(
+            importMessage = null,
+            progressMessage = null,
+            dbImportMessage = null,
+            promptTemplateMessage = null
+        )
     }
 }

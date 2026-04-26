@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.gash.vocab.GashApp
 import com.gash.vocab.data.db.ProgressEntity
 import com.gash.vocab.data.db.WordEntity
+import com.gash.vocab.data.repository.DifficultyLevel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +37,17 @@ data class ReviewUiState(
     val allWeeks: List<String> = emptyList(),
     val allPos: List<String> = emptyList(),
     val selectedWeek: String? = null,
-    val selectedPos: String? = null
+    val selectedPos: String? = null,
+    /**
+     * Example sentence resolved against the current difficulty setting:
+     * the A2 example if A2 is selected and present, else the B1-B2 example.
+     */
+    val effectiveExample: String = "",
+    /**
+     * Cloze sentences resolved against the current difficulty setting:
+     * the A2 cloze list if A2 is selected and non-empty, else the B1-B2 cloze list.
+     */
+    val effectiveCloze: List<String> = emptyList()
 )
 
 class ReviewViewModel(application: Application) : AndroidViewModel(application) {
@@ -171,13 +182,30 @@ class ReviewViewModel(application: Application) : AndroidViewModel(application) 
 
     private suspend fun loadWord(wordId: Int) {
         val word = repo.getWordById(wordId) ?: return
+
+        // Resolve example & cloze against the current difficulty setting.
+        // A2 falls back to B1-B2 when this card has no A2 variant authored.
+        val level = settings.difficultyLevel
+        val example = if (level == DifficultyLevel.A2 && word.exampleA2.isNotBlank()) {
+            word.exampleA2
+        } else {
+            word.example
+        }
+        val cloze = if (level == DifficultyLevel.A2 && word.clozeA2.isNotEmpty()) {
+            word.clozeA2
+        } else {
+            word.cloze
+        }
+
         _state.value = _state.value.copy(
             currentWord = word,
             mode = ReviewMode.FRONT,
             clozeRevealed = false,
             choiceAnswer = null,
             isCorrect = null,
-            selectedClozeIndex = (0 until word.cloze.size).random()
+            selectedClozeIndex = if (cloze.isNotEmpty()) (0 until cloze.size).random() else 0,
+            effectiveExample = example,
+            effectiveCloze = cloze
         )
     }
 

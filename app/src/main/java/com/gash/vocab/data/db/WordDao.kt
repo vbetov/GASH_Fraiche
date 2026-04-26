@@ -28,6 +28,10 @@ interface WordDao {
     @Query("SELECT COUNT(*) FROM words")
     suspend fun getWordCount(): Int
 
+    /** All word IDs currently in the vocabulary table. */
+    @Query("SELECT id FROM words")
+    suspend fun getAllWordIds(): List<Int>
+
     @Query("SELECT DISTINCT pos FROM words ORDER BY pos ASC")
     fun getAllPosValues(): Flow<List<String>>
 

@@ -6,6 +6,7 @@ import com.gash.vocab.data.db.AppDatabase
 import com.gash.vocab.data.db.ProgressEntity
 import com.gash.vocab.data.db.WordEntity
 import com.gash.vocab.domain.SM2
+import com.gash.vocab.util.normaliseFrench
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
@@ -130,41 +131,214 @@ class VocabRepository(private val db: AppDatabase) {
         }
     }
 
-    // ── Progress export/import ────────────────────────────────────
+    // ── AI prompt template ─────────────────────────────────────────
 
-    suspend fun exportProgress(context: Context, uri: Uri): Result<Int> {
+    /**
+     * Reads the bundled prompt template (`assets/vocab_prompt_template.md`),
+     * injects the current vocabulary as a markdown list into the
+     * `{{EXISTING_VOCAB_LIST}}` placeholder so the AI assistant can deduplicate
+     * against it, and writes the rendered file to [uri].
+     *
+     * Returns the number of words injected on success.
+     */
+    suspend fun savePromptTemplate(context: Context, uri: Uri): Result<Int> {
         return try {
-            val allProgress = progressDao.getAllProgressList()
-            val json = gson.toJson(allProgress)
-            context.contentResolver.openOutputStream(uri)?.use { stream ->
-                val writer = stream.bufferedWriter()
-                writer.write(json)
-                writer.flush()
+            val template = context.assets.open("vocab_prompt_template.md")
+                .bufferedReader().use { it.readText() }
+
+            val words = wordDao.getAllWordsList()
+            val vocabBlock = if (words.isEmpty()) {
+                "_(no existing vocabulary in the database yet — start IDs from 1)_"
+            } else {
+                words.joinToString("\n") { word ->
+                    "- ${word.french}  *(normalised: `${word.normKey}`)*"
+                }
             }
-            Result.success(allProgress.size)
+
+            val rendered = template.replace("{{EXISTING_VOCAB_LIST}}", vocabBlock)
+
+            val outputStream = context.contentResolver.openOutputStream(uri)
+                ?: return Result.failure(Exception("Could not open file for writing"))
+            outputStream.use { stream ->
+                stream.bufferedWriter().use { it.write(rendered) }
+            }
+
+            Result.success(words.size)
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    suspend fun importProgress(context: Context, uri: Uri): Result<Int> {
+    // ── Progress export/import ────────────────────────────────────
+
+    /**
+     * Wire format for an exported progress entry.
+     *
+     * Mirrors every field on [ProgressEntity], plus two extra identity fields
+     * (`french`, `normKey`) so that on re-import we can match progress to the
+     * current vocabulary by *content*, not by raw `wordId`. That means a seed
+     * revision that reorders or renumbers words won't break re-imports.
+     *
+     * All fields have defaults so a legacy export (only `wordId` + progress
+     * fields, no `french`/`normKey`) still parses cleanly into this class —
+     * the importer falls back to wordId matching in that case.
+     */
+    data class ExportableProgress(
+        // ── Identity ──
+        /** French headword. Human-readable; may be re-normalised on import. */
+        val french: String? = null,
+        /** Normalised French key — preferred matcher on import. */
+        val normKey: String? = null,
+        // ── Progress fields (mirror ProgressEntity) ──
+        val wordId: Int = 0,
+        val easeFactor: Double = 2.5,
+        val intervalDays: Int = 0,
+        val repetitions: Int = 0,
+        val nextReview: Long = 0L,
+        val firstEncountered: String? = null,
+        val lastEncountered: String? = null,
+        val knewCheck: Int = 0,
+        val knewCloze: Int = 0,
+        val knewChoice: Int = 0,
+        val didntKnow: Int = 0,
+        val qualityHistory: List<Int> = emptyList()
+    ) {
+        fun toProgressEntity(targetWordId: Int): ProgressEntity = ProgressEntity(
+            wordId = targetWordId,
+            easeFactor = easeFactor,
+            intervalDays = intervalDays,
+            repetitions = repetitions,
+            nextReview = nextReview,
+            firstEncountered = firstEncountered,
+            lastEncountered = lastEncountered,
+            knewCheck = knewCheck,
+            knewCloze = knewCloze,
+            knewChoice = knewChoice,
+            didntKnow = didntKnow,
+            qualityHistory = qualityHistory
+        )
+
+        companion object {
+            fun fromEntity(entity: ProgressEntity, word: WordEntity): ExportableProgress =
+                ExportableProgress(
+                    french = word.french,
+                    normKey = word.normKey,
+                    wordId = entity.wordId,
+                    easeFactor = entity.easeFactor,
+                    intervalDays = entity.intervalDays,
+                    repetitions = entity.repetitions,
+                    nextReview = entity.nextReview,
+                    firstEncountered = entity.firstEncountered,
+                    lastEncountered = entity.lastEncountered,
+                    knewCheck = entity.knewCheck,
+                    knewCloze = entity.knewCloze,
+                    knewChoice = entity.knewChoice,
+                    didntKnow = entity.didntKnow,
+                    qualityHistory = entity.qualityHistory
+                )
+        }
+    }
+
+    suspend fun exportProgress(context: Context, uri: Uri): Result<Int> {
+        return try {
+            val allProgress = progressDao.getAllProgressList()
+            // Index current vocabulary by id so each progress row can carry its
+            // french + normKey on the wire.
+            val wordsById = wordDao.getAllWordsList().associateBy { it.id }
+
+            val exportable = allProgress.mapNotNull { p ->
+                val word = wordsById[p.wordId] ?: return@mapNotNull null
+                ExportableProgress.fromEntity(p, word)
+            }
+
+            val json = gson.toJson(exportable)
+            context.contentResolver.openOutputStream(uri)?.use { stream ->
+                val writer = stream.bufferedWriter()
+                writer.write(json)
+                writer.flush()
+            }
+            Result.success(exportable.size)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Result of a progress-import operation.
+     *
+     * @property imported   entries successfully written to the progress table
+     * @property remapped   subset of [imported] where the matched word's id differs
+     *                      from the entry's stored `wordId` (i.e. the word was
+     *                      identified by content fingerprint after a renumber)
+     * @property skipped    human-readable identifiers of entries that didn't match
+     *                      any word in the current vocabulary
+     */
+    data class ProgressImportSummary(
+        val imported: Int,
+        val remapped: Int,
+        val skipped: List<String>
+    )
+
+    suspend fun importProgress(context: Context, uri: Uri): Result<ProgressImportSummary> {
         return try {
             val json = context.contentResolver.openInputStream(uri)?.use { stream ->
                 stream.bufferedReader().readText()
             } ?: return Result.failure(Exception("Could not read file"))
 
-            val type = object : TypeToken<List<ProgressEntity>>() {}.type
-            val entries: List<ProgressEntity> = gson.fromJson(json, type)
+            val type = object : TypeToken<List<ExportableProgress>>() {}.type
+            val entries: List<ExportableProgress> = gson.fromJson(json, type)
+                ?: return Result.failure(Exception("File is not a progress JSON list"))
+
+            // Build a content-fingerprint lookup against the *current* vocabulary.
+            val currentWords = wordDao.getAllWordsList()
+            val byNormKey: Map<String, Int> = currentWords.associate { it.normKey to it.id }
+            val validIds: Set<Int> = currentWords.map { it.id }.toHashSet()
+
+            val skipped = mutableListOf<String>()
+            var imported = 0
+            var remapped = 0
 
             entries.forEach { entry ->
-                val existing = progressDao.getProgress(entry.wordId)
-                if (existing != null) {
-                    progressDao.updateProgress(entry)
-                } else {
-                    progressDao.insertProgress(entry)
+                // Resolve the target word by content fingerprint first. Re-normalise
+                // `french` from the file in case the export pre-dated a normaliser
+                // tweak. Fall back to raw `wordId` only when no identity fields were
+                // provided (legacy exports).
+                val candidateKey = when {
+                    !entry.normKey.isNullOrBlank() -> entry.normKey
+                    !entry.french.isNullOrBlank() -> normaliseFrench(entry.french)
+                    else -> null
                 }
+
+                val targetId: Int? = when {
+                    candidateKey != null -> byNormKey[candidateKey]
+                    entry.wordId in validIds -> entry.wordId
+                    else -> null
+                }
+
+                if (targetId == null) {
+                    skipped.add(entry.french ?: "id=${entry.wordId}")
+                    return@forEach
+                }
+
+                if (targetId != entry.wordId) remapped++
+
+                val progressRow = entry.toProgressEntity(targetWordId = targetId)
+                val existing = progressDao.getProgress(targetId)
+                if (existing != null) {
+                    progressDao.updateProgress(progressRow)
+                } else {
+                    progressDao.insertProgress(progressRow)
+                }
+                imported++
             }
-            Result.success(entries.size)
+
+            Result.success(
+                ProgressImportSummary(
+                    imported = imported,
+                    remapped = remapped,
+                    skipped = skipped
+                )
+            )
         } catch (e: Exception) {
             Result.failure(e)
         }
